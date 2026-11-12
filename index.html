@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Calendario dell’avvento di anatomia</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300;6..72,500&display=swap">
+<style>
+:root{--bg:#EEF3F8;--ink:#0E2747;--line:#A9BFD8;--card:#fff;--bad:#B3243A;--ok:#17705D;color-scheme:light;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0C2342;--ink:#E6EEF8;--line:#35557F;--card:#12305A;--bad:#FF8A99;--ok:#5AD1B5;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0C2342;--ink:#E6EEF8;--line:#35557F;--card:#12305A;--bad:#FF8A99;--ok:#5AD1B5;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:19px/1.55 Newsreader,Georgia,serif}
+main{max-width:34rem;margin:0 auto;padding:1.5rem 1.25rem 3rem}
+.day{font-size:7rem;line-height:1;font-weight:300;margin:0;color:transparent;-webkit-text-stroke:1.5px var(--ink)}
+.rule{width:3rem;height:2px;border:0;background:var(--bad);margin:.4rem 0 1.4rem}
+h1{font-size:1.6rem;line-height:1.25;font-weight:500;margin:0 0 1.2rem}
+img{max-width:100%;height:auto;display:block;margin:0 0 1.2rem;border-radius:3px}
+button{display:flex;gap:.9rem;width:100%;text-align:left;font:inherit;background:var(--card);color:var(--ink);
+  border:1px solid var(--line);border-radius:4px;padding:.8rem 1rem;margin:0 0 .6rem;cursor:pointer}
+button span:first-child{font-weight:500;min-width:1.1em}
+button:focus-visible,input:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+button:disabled{cursor:default;color:var(--ink);opacity:1}
+button.ok{border-color:var(--ok);box-shadow:inset 4px 0 0 var(--ok)}
+button.no{border-color:var(--bad);box-shadow:inset 4px 0 0 var(--bad)}
+.v{font-weight:500;margin:1.2rem 0 .3rem}
+.ok-t{color:var(--ok)}.bad-t{color:var(--bad)}
+.row{display:grid;grid-template-columns:2.4rem 1fr;gap:.5rem;padding:.7rem 0;border-top:1px solid var(--line)}
+.n{font-weight:500}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<main id="app"></main>
+<script>
+// Ogni domanda: [testo, risposta giusta, [4 sbagliate], spiegazione, immagine opzionale (data: URI)]
+// Le alternative vengono mescolate in modo stabile, quindi la giusta non è sempre la prima.
+const Q=[
+["Qual è l’osso più lungo del corpo umano?","Femore",["Omero","Tibia","Fibula","Radio"],"Il femore è il più lungo e robusto; la tibia viene subito dopo."],
+["Quante sono le vertebre cervicali?","Sette",["Cinque","Nove","Dodici","Tre"],"Sono sette (C1–C7), come in quasi tutti i mammiferi, giraffa compresa."],
+["Quale numero ha il nervo vago tra i nervi cranici?","X",["VII","IX","XI","XII"],"Il vago è il X nervo cranico. Il VII è il facciale, il IX il glossofaringeo, l’XI l’accessorio."],
+["Quale valvola separa atrio e ventricolo sinistro?","Mitrale",["Tricuspide","Aortica","Polmonare","Di Eustachio"],"La mitrale (o bicuspide) sta a sinistra; la tricuspide separa atrio e ventricolo destro."],
+["Quale muscolo è il principale responsabile dell’inspirazione?","Diaframma",["Gran dentato","Retto dell’addome","Trapezio","Piccolo pettorale"],"Il diaframma, contraendosi, si abbassa e aumenta il volume della cavità toracica."],
+["Quale di questi organi è retroperitoneale?","Rene",["Stomaco","Fegato","Milza","Digiuno"],"I reni stanno dietro al peritoneo. Stomaco, fegato, milza e digiuno sono intraperitoneali."],
+["Quante ossa compongono il carpo?","Otto",["Sei","Sette","Nove","Dieci"],"Otto, in due file: scafoide, semilunare, piramidale, pisiforme, trapezio, trapezoide, capitato, uncinato."],
+["Quale arteria irrora direttamente il miocardio?","Coronaria",["Succlavia","Carotide comune","Bronchiale","Frenica"],"Le coronarie nascono dalla radice dell’aorta, subito sopra la valvola aortica."],
+["Quali cellule del pancreas producono l’insulina?","Cellule beta",["Cellule alfa","Cellule delta","Cellule acinose","Cellule PP"],"Le cellule beta delle isole di Langerhans producono insulina; le alfa producono glucagone."],
+["Quale osso del cranio contiene la sella turcica?","Sfenoide",["Etmoide","Occipitale","Temporale","Frontale"],"La sella turcica è una depressione del corpo dello sfenoide e ospita l’ipofisi."],
+["Quale muscolo flette il gomito e allo stesso tempo supina l’avambraccio?","Bicipite brachiale",["Brachiale","Brachioradiale","Tricipite brachiale","Pronatore rotondo"],"Il bicipite fa entrambe le cose. Il brachiale flette soltanto, il brachioradiale è flessore a avambraccio semipronato."],
+["Quale nervo passa nel solco dietro l’epicondilo mediale, il punto del «gomito che fa le scintille»?","Ulnare",["Mediano","Radiale","Muscolocutaneo","Ascellare"],"È il nervo ulnare, molto superficiale in quel punto: per questo un colpo dà il formicolio fino al mignolo."],
+["Qual è il più piccolo osso del corpo umano?","Staffa",["Incudine","Martello","Pisiforme","Sesamoide"],"La staffa, nell’orecchio medio, è lunga circa 3 mm."],
+["In quale lobo cerebrale si trova l’area di Broca?","Frontale",["Occipitale","Parietale","Temporale","Insula"],"Nel giro frontale inferiore dell’emisfero dominante; è coinvolta nella produzione del linguaggio."],
+["Quanti lobi ha il polmone destro?","Tre",["Due","Quattro","Cinque","Uno"],"Superiore, medio e inferiore. Il sinistro ne ha due e una lingula, per far posto al cuore."],
+["Quale di questi muscoli NON fa parte della cuffia dei rotatori?","Gran rotondo",["Sovraspinato","Sottospinato","Piccolo rotondo","Sottoscapolare"],"La cuffia è formata da sovraspinato, sottospinato, piccolo rotondo e sottoscapolare. Il gran rotondo ne è escluso."],
+["Quale vaso porta sangue ossigenato dai polmoni al cuore?","Vene polmonari",["Arteria polmonare","Vena cava superiore","Aorta","Seno coronarico"],"Le vene polmonari sono le uniche vene che portano sangue ossigenato. L’arteria polmonare porta sangue povero di ossigeno ai polmoni."],
+["Quale ormone è prodotto dalla zona fascicolata della corticale del surrene?","Cortisolo",["Adrenalina","Aldosterone","Noradrenalina","Insulina"],"La fascicolata produce glucocorticoidi (cortisolo), la glomerulare aldosterone. L’adrenalina viene dalla midollare."],
+["Quale tratto dell’intestino tenue è il più lungo?","Ileo",["Duodeno","Digiuno","Piloro","Appendice"],"Circa 3 m l’ileo, 2,5 m il digiuno e 25 cm il duodeno. Piloro e appendice non fanno parte del tenue."],
+["Quale nervo innerva il diaframma?","Frenico",["Vago","Intercostale","Toracico lungo","Grande splancnico"],"Il frenico nasce da C3–C5: «C3, C4, C5 mantengono vivo il diaframma»."],
+["Quale struttura NON passa nel canale carpale?","Nervo ulnare",["Nervo mediano","Tendini flessori superficiali","Tendini flessori profondi","Tendine del flessore lungo del pollice"],"Il nervo ulnare passa nel canale di Guyon, davanti al retinacolo dei flessori."],
+["Quale osso della gamba è il più mediale e sostiene la maggior parte del carico?","Tibia",["Fibula","Rotula","Astragalo","Calcagno"],"La tibia trasmette il peso dal femore al piede; la fibula ne sostiene poco ed è sede di inserzioni muscolari."],
+["Con quale struttura l’ipotalamo è collegato tramite il peduncolo ipofisario?","Ipofisi",["Epifisi","Tiroide","Timo","Amigdala"],"L’ipofisi sta nella sella turcica. L’epifisi (ghiandola pineale) è un’altra cosa, più indietro nel diencefalo."],
+["Dove si trova il nodo seno-atriale, il pacemaker naturale del cuore?","Atrio destro",["Setto interventricolare","Atrio sinistro","Apice del cuore","Valvola aortica"],"Nella parete dell’atrio destro, vicino allo sbocco della vena cava superiore."]
+];
+Q.forEach(([,r,w],i)=>console.assert(w.length===4&&!w.includes(r),"domanda "+(i+1)));
+
+const $=document.getElementById("app");
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const KEY="anatomia-avvento";
+let st={};
+// shortcut: risposte in localStorage, valide solo nello stesso browser; passare a un database se serve altrove
+try{st=JSON.parse(localStorage.getItem(KEY))||{}}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}};
+
+function quiz(n){
+  const [q,right,wrong,why,img]=Q[n-1], picked=st[n];
+  const opts=[right,...wrong].map((t,i)=>[t,Math.sin(n*9301+i*49297)]).sort((a,b)=>a[1]-b[1]).map(o=>o[0]);
+  $.innerHTML=`<p class="day"><span class="sr">Giorno </span>${n}</p><hr class="rule"><h1>${esc(q)}</h1>`+
+    (img?`<img src="${esc(img)}" alt="">`:"")+
+    `<div>${opts.map((t,i)=>`<button data-t="${esc(t)}" class="${picked?(t===right?"ok":t===picked?"no":""):""}" ${picked?"disabled":""}><span>${"ABCDE"[i]}</span><span>${esc(t)}${t===picked?" <em>(la tua risposta)</em>":""}</span></button>`).join("")}</div>`+
+    (picked?(picked===right?`<p class="v ok-t">Giusto.</p>`:`<p class="v bad-t">Non è questa. La risposta giusta è «${esc(right)}».</p><p>${esc(why)}</p>`):"");
+  $.querySelectorAll("button").forEach(b=>b.onclick=()=>{st[n]=b.dataset.t;save();quiz(n)});
+}
+
+function summary(){
+  let ok=0,ko=0;
+  const rows=Q.map(([q,right],i)=>{
+    const p=st[i+1];let s;
+    if(!p)s="<em>Non risposta</em>";
+    else if(p===right){ok++;s='<b class="ok-t">Giusta</b>'}
+    else{ko++;s=`<b class="bad-t">Sbagliata</b>: hai scelto «${esc(p)}», era «${esc(right)}»`}
+    return `<div class="row"><span class="n">${i+1}</span><div>${esc(q)}<br>${s}</div></div>`;
+  }).join("");
+  $.innerHTML=`<p class="day"><span class="sr">Giuste: </span>${ok}</p><hr class="rule"><h1>giuste su ${Q.length}</h1><p>${ko} sbagliate, ${Q.length-ok-ko} senza risposta.</p>${rows}`;
+}
+
+function home(){$.innerHTML=`<h1>Calendario dell’avvento</h1><p>Inquadra il QR code di una casella per aprire la domanda del giorno.</p>`}
+
+function route(){
+  const h=location.hash.slice(1),m=/^d(\d+)$/.exec(h);
+  if(m&&Q[m[1]-1])quiz(+m[1]);else if(h==="riepilogo")summary();else home();
+  window.scrollTo(0,0);
+}
+window.addEventListener("hashchange",route);
+route();
+</script>
+</body>
+</html>
