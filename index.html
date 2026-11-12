@@ -4,36 +4,33 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Calendario dell’avvento di anatomia</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Montserrat:wght@500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300;6..72,500&display=swap">
 <style>
-:root{--bg:#f4efe5;--ink:#173d35;--muted:#6d766d;--line:#d7c8a9;--card:#fffdf8;--bad:#9b3041;--ok:#276b54;--gold:#b58a3a;--shadow:0 12px 30px rgba(48,38,21,.09);color-scheme:light;
+:root{--bg:#EEF3F8;--ink:#0E2747;--line:#A9BFD8;--card:#fff;--bad:#B3243A;--ok:#17705D;color-scheme:light;
   box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#152b27;--ink:#f4ecda;--muted:#c0baa9;--line:#53675d;--card:#1d3932;--bad:#e58b93;--ok:#8bc9a9;--gold:#d4ae62;--shadow:0 12px 30px rgba(0,0,0,.2);color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#152b27;--ink:#f4ecda;--muted:#c0baa9;--line:#53675d;--card:#1d3932;--bad:#e58b93;--ok:#8bc9a9;--gold:#d4ae62;--shadow:0 12px 30px rgba(0,0,0,.2);color-scheme:dark}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0C2342;--ink:#E6EEF8;--line:#35557F;--card:#12305A;--bad:#FF8A99;--ok:#5AD1B5;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0C2342;--ink:#E6EEF8;--line:#35557F;--card:#12305A;--bad:#FF8A99;--ok:#5AD1B5;color-scheme:dark}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *{box-sizing:border-box}
-body{min-height:100vh;margin:0;background:radial-gradient(circle at 15% 10%,rgba(181,138,58,.12) 0 1px,transparent 2px),radial-gradient(circle at 85% 30%,rgba(39,107,84,.1) 0 1px,transparent 2px),var(--bg);background-size:27px 27px,33px 33px;color:var(--ink);font:1.25rem/1.55 "Cormorant Garamond",Georgia,serif}
-main{max-width:36rem;margin:0 auto;padding:2.5rem 1.25rem 3.5rem}
-main:before{content:"✦  ✧  ✦";display:block;color:var(--gold);font:600 .85rem/1 Montserrat,sans-serif;letter-spacing:.45em;text-align:center;margin-bottom:1.2rem}
-.day{font-size:8rem;line-height:.8;font-weight:500;text-align:center;margin:0;color:var(--ink);letter-spacing:-.08em}
-.rule{display:none}
-h1{font-size:2rem;line-height:1.15;font-weight:500;text-align:center;margin:0 0 1.5rem}
-img{max-width:100%;height:auto;display:block;margin:0 auto 1.5rem;border:5px solid var(--card);border-radius:2px;box-shadow:var(--shadow)}
-button{display:flex;align-items:baseline;gap:1rem;width:100%;text-align:left;font:inherit;background:var(--card);color:var(--ink);
-  border:1px solid var(--line);border-radius:2px;padding:.85rem 1rem;margin:0 0 .7rem;cursor:pointer;box-shadow:0 3px 0 rgba(181,138,58,.18);transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
-button:hover:not(:disabled){transform:translateY(-2px);border-color:var(--gold);box-shadow:var(--shadow)}
-button span:first-child{font:600 .8rem Montserrat,sans-serif;color:var(--gold);min-width:1.1em}
-button:focus-visible,input:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+body{margin:0;background:var(--bg);color:var(--ink);font:19px/1.55 Newsreader,Georgia,serif}
+main{max-width:34rem;margin:0 auto;padding:1.5rem 1.25rem 3rem}
+.day{font-size:7rem;line-height:1;font-weight:300;margin:0;color:transparent;-webkit-text-stroke:1.5px var(--ink)}
+.rule{width:3rem;height:2px;border:0;background:var(--bad);margin:.4rem 0 1.4rem}
+h1{font-size:1.6rem;line-height:1.25;font-weight:500;margin:0 0 1.2rem}
+img{max-width:100%;height:auto;display:block;margin:0 0 1.2rem;border-radius:3px}
+button{display:flex;gap:.9rem;width:100%;text-align:left;font:inherit;background:var(--card);color:var(--ink);
+  border:1px solid var(--line);border-radius:4px;padding:.8rem 1rem;margin:0 0 .6rem;cursor:pointer}
+button span:first-child{font-weight:500;min-width:1.1em}
+button:focus-visible,input:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
 button:disabled{cursor:default;color:var(--ink);opacity:1}
-button.ok{border-color:var(--ok);box-shadow:inset 4px 0 0 var(--ok),0 3px 0 rgba(39,107,84,.15)}
-button.no{border-color:var(--bad);box-shadow:inset 4px 0 0 var(--bad),0 3px 0 rgba(155,48,65,.15)}
-.v{font-weight:600;margin:1.5rem 0 .3rem}
+button.ok{border-color:var(--ok);box-shadow:inset 4px 0 0 var(--ok)}
+button.no{border-color:var(--bad);box-shadow:inset 4px 0 0 var(--bad)}
+.v{font-weight:500;margin:1.2rem 0 .3rem}
 .ok-t{color:var(--ok)}.bad-t{color:var(--bad)}
-.row{display:grid;grid-template-columns:2.4rem 1fr;gap:.7rem;padding:.8rem 0;border-top:1px solid var(--line)}
-.n{font:600 .8rem Montserrat,sans-serif;color:var(--gold);padding-top:.25rem}
+.row{display:grid;grid-template-columns:2.4rem 1fr;gap:.5rem;padding:.7rem 0;border-top:1px solid var(--line)}
+.n{font-weight:500}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
-@media (max-width:30rem){body{font-size:1.15rem}main{padding-top:2rem}.day{font-size:7rem}h1{font-size:1.8rem}}
 </style>
 </head>
 <body>
