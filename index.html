@@ -6,29 +6,32 @@
 <title>Calendario dell’avvento di anatomia</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300;6..72,500&display=swap">
 <style>
-:root{--bg:#EEF3F8;--ink:#0E2747;--line:#A9BFD8;--card:#fff;--bad:#B3243A;--ok:#17705D;color-scheme:light;
+:root{--bg:#0F3B2A;--ink:#FFF8E7;--line:#3F6E58;--card:#FFF8E7;--cardink:#123524;--gold:#D9B25B;
+  --ok:#9BE3B0;--bad:#FF9AA8;--okb:#1F7A4D;--badb:#B3122D;color-scheme:dark;
   box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0C2342;--ink:#E6EEF8;--line:#35557F;--card:#12305A;--bad:#FF8A99;--ok:#5AD1B5;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#0C2342;--ink:#E6EEF8;--line:#35557F;--card:#12305A;--bad:#FF8A99;--ok:#5AD1B5;color-scheme:dark}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:19px/1.55 Newsreader,Georgia,serif}
+body::before{content:"";display:block;height:.6rem;background:repeating-linear-gradient(135deg,#C21F39 0 .6rem,#FFF8E7 .6rem 1.2rem)}
 main{max-width:34rem;margin:0 auto;padding:1.5rem 1.25rem 3rem}
-.day{font-size:7rem;line-height:1;font-weight:300;margin:0;color:transparent;-webkit-text-stroke:1.5px var(--ink)}
-.rule{width:3rem;height:2px;border:0;background:var(--bad);margin:.4rem 0 1.4rem}
+.day{position:relative;display:grid;place-items:center;width:7.5rem;height:7.5rem;margin:3.5rem 0 1.2rem;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#E8485E,#A5132B 70%);color:var(--ink);font-size:3.6rem;line-height:1;font-weight:500}
+.day::before{content:"";position:absolute;top:-.8rem;left:50%;width:1.6rem;height:1rem;margin-left:-.8rem;border-radius:3px 3px 0 0;background:var(--gold)}
+.day::after{content:"";position:absolute;bottom:calc(100% + .8rem);left:50%;width:2px;height:3rem;background:var(--gold)}
+.rule{width:3rem;height:2px;border:0;background:var(--gold);margin:0 0 1.4rem}
 h1{font-size:1.6rem;line-height:1.25;font-weight:500;margin:0 0 1.2rem}
-img{max-width:100%;height:auto;display:block;margin:0 0 1.2rem;border-radius:3px}
-button{display:flex;gap:.9rem;width:100%;text-align:left;font:inherit;background:var(--card);color:var(--ink);
-  border:1px solid var(--line);border-radius:4px;padding:.8rem 1rem;margin:0 0 .6rem;cursor:pointer}
+img{max-width:100%;height:auto;display:block;margin:0 0 1.2rem;border-radius:6px;border:2px solid var(--gold)}
+button{display:flex;gap:.9rem;width:100%;text-align:left;font:inherit;background:var(--card);color:var(--cardink);
+  border:1px solid var(--gold);border-radius:6px;padding:.8rem 1rem;margin:0 0 .6rem;cursor:pointer}
 button span:first-child{font-weight:500;min-width:1.1em}
-button:focus-visible,input:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
-button:disabled{cursor:default;color:var(--ink);opacity:1}
-button.ok{border-color:var(--ok);box-shadow:inset 4px 0 0 var(--ok)}
-button.no{border-color:var(--bad);box-shadow:inset 4px 0 0 var(--bad)}
+button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+button:disabled{cursor:default;color:var(--cardink);opacity:1}
+button.ok{border-color:var(--okb);box-shadow:inset 5px 0 0 var(--okb)}
+button.no{border-color:var(--badb);box-shadow:inset 5px 0 0 var(--badb)}
 .v{font-weight:500;margin:1.2rem 0 .3rem}
 .ok-t{color:var(--ok)}.bad-t{color:var(--bad)}
 .row{display:grid;grid-template-columns:2.4rem 1fr;gap:.5rem;padding:.7rem 0;border-top:1px solid var(--line)}
-.n{font-weight:500}
+.n{font-weight:500;color:var(--gold)}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
